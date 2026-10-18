@@ -69,6 +69,12 @@
       "source": "notebooks/m3dgs/outputs/sample_config.json",
       "bytes": 2176,
       "sha256": "b52f5a8481d6344b58e86ee030397125843b500dc4436fee4ea109e81f6ecde1"
+    },
+    {
+      "path": "assets/pipeline-overview.png",
+      "source": "../Paper/fig/fig_pipeline_illustrated_v2.png",
+      "bytes": 2015646,
+      "sha256": "97d2c404b0b416b6fae8cb795aadbbd2e9cb9763a522ef9a0c630387f7d86650"
     }
   ]
 }
