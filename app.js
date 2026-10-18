@@ -47,3 +47,4 @@ function loadDemo() {
   status.textContent = '正在加载 ' + m.title + '…';
 }
 unload.addEventListener('click', clearDemo);
+loadDemo();
