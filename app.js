@@ -14,14 +14,13 @@ function clearDemo() {
   stage.replaceChildren();
   const p = document.createElement('p');
   p.className = 'placeholder';
-  p.textContent = '点击“加载交互”，开始尝试当前方法。';
+  p.textContent = '选择上方方法开始交互。';
   stage.append(p);
   unload.hidden = true;
   status.textContent = '';
 }
 document.querySelectorAll('[data-method]').forEach(button => {
   button.addEventListener('click', () => {
-    clearDemo();
     selected = button.dataset.method;
     const m = methods[selected];
     document.querySelectorAll('[data-method]').forEach(b => b.setAttribute('aria-pressed', String(b === button)));
@@ -30,20 +29,21 @@ document.querySelectorAll('[data-method]').forEach(button => {
     const limit = document.createElement('p'); limit.className = 'small'; limit.textContent = m.limit;
     document.getElementById('method-description').replaceChildren(title, text, limit);
     document.getElementById('standalone').href = 'demos/' + m.file;
+    loadDemo();
   });
 });
-document.getElementById('load-demo').addEventListener('click', () => {
+function loadDemo() {
   const m = methods[selected];
   const frame = document.createElement('iframe');
   frame.title = m.title;
   frame.src = 'demos/' + m.file;
   frame.allowFullscreen = true;
-  stage.replaceChildren(frame);
-  unload.hidden = false;
-  status.textContent = '正在打开 ' + m.title + '。若画布为空，请查看独立窗口中的提示，并确认浏览器启用了 WebGL2。';
   frame.addEventListener('load', () => {
     if (stage.firstElementChild !== frame) return;
-    status.textContent = '页面已载入；模型解压与 GPU 初始化可能仍需等待。操作方式见交互窗口，也可以使用独立窗口获得更大画布。';
+    status.textContent = '交互页面已载入。若画布为空，请稍等或在独立窗口打开。';
   });
-});
+  stage.replaceChildren(frame);
+  unload.hidden = false;
+  status.textContent = '正在加载 ' + m.title + '…';
+}
 unload.addEventListener('click', clearDemo);

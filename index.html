@@ -6,7 +6,7 @@
   <meta name="description" content="M3DGS 实验记录：Lego 原始微运动证据、方法演进与可操作的三维振动演示。">
   <title>M3DGS · 微运动与交互实验</title>
   <link rel="stylesheet" href="style.css">
-  <script src="app.js" defer></script>
+  <script src="app.js?v=2547a11fdb04" defer></script>
 </head>
 <body>
 <header><a class="wordmark" href="#">M3DGS <span>实验记录</span></a><nav aria-label="页面导航"><a href="#pipeline">研究流程</a><a href="#evidence">原始证据</a><a href="#methods">方法与交互</a><a href="#next">后续工作</a></nav></header>
@@ -34,7 +34,7 @@
 
   <section id="methods">
     <h2>方法与交互</h2>
-    <p>选择方法后点击“加载交互”。较大的模型首次加载需要一些时间。</p>
+    <p>点击方法即可开始交互。较大的模型首次加载需要一些时间。</p>
     <div class="method-buttons" role="group" aria-label="选择实验方法">
       <button data-method="davis" aria-pressed="false">V1 · Davis 二维交互</button>
       <button data-method="coarse" aria-pressed="false">V2 · 三维粗初始化</button>
@@ -43,8 +43,8 @@
       <button data-method="mechanics" aria-pressed="false">V4 · 力学模态逆渲染</button>
     </div>
     <article id="method-description" aria-live="polite"><h3>V2 · 高保真 Gaussian 外观与共享运动场</h3><p>先优化静态 3DGS 外观，再冻结外观，从原始微位移拟合共享三维复数运动场。它是 V2 的外观升级，与粗初始化属于同一研究阶段。</p><p class="small">支持自由转视角、拖拽、轻敲和阻尼 / 频率调节。交互强度与阻尼不能解释为已标定的真实受力响应。</p></article>
-    <div class="demo-actions"><button class="button" id="load-demo">加载交互</button><a id="standalone" href="demos/gaussian-hifi.html" target="_blank" rel="noopener">独立窗口打开 ↗</a><button class="text-button" id="unload-demo" hidden>关闭交互</button></div>
-    <div id="demo-stage"><p class="placeholder">点击“加载交互”开始体验</p></div>
+    <div class="demo-actions"><a id="standalone" href="demos/gaussian-hifi.html" target="_blank" rel="noopener">独立窗口打开 ↗</a><button class="text-button" id="unload-demo" hidden>关闭交互</button></div>
+    <div id="demo-stage"><p class="placeholder">选择上方方法开始交互。</p></div>
     <p id="demo-status" class="small" role="status"></p>
     <noscript><p>浏览器需要启用 JavaScript 才能使用嵌入式交互。也可直接打开 <a href="demos/davis.html">Davis</a>、<a href="demos/gaussian-coarse.html">粗初始化</a>、<a href="demos/gaussian-hifi.html">高保真</a>、<a href="demos/gaussian-vibration.html">逐 Gaussian</a> 或 <a href="demos/mechanics.html">力学模态</a> 页面。</p></noscript>
   </section>
