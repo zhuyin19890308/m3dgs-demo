@@ -25,18 +25,11 @@
   </figure>
 
   <section id="evidence">
-    <h2>Lego 原始数据与振动证据</h2>
-    <p>这里的 Lego 不是单张静态图片，而是 <a href="https://3d-motion-magnification.github.io/">3D Motion Magnification（ICCV 2023）</a>公开的 <code>lego_3Hz</code> 合成动态序列。我们使用同一相机跨时间的图像进行诊断；同一时刻切换相机，不能当作物体振动。</p>
-    <div class="facts"><div><strong>30 fps</strong><span>作者配置的采样率</span></div><div><strong>30 帧</strong><span>约 1 秒观测窗口</span></div><div><strong>≈ 3 Hz</strong><span>三个训练视角的相位谱主峰</span></div><div><strong>多视角</strong><span>图像与相机参数可对应</span></div></div>
-    <figure><a href="assets/lego_3Hz_three_views.gif" target="_blank" rel="noopener"><img src="assets/lego_3Hz_three_views.gif" alt="Lego 在相机 000、010、020 下的同步原始幅值动画" width="960" height="320"></a><figcaption><b>A · 原始幅值动画。</b>三个同步视角，没有进行运动放大。微运动肉眼不明显，因此还需要下面的图像和时间诊断。</figcaption></figure>
-    <figure><a href="assets/figure_11_0.png" target="_blank" rel="noopener"><img src="assets/figure_11_0.png" alt="同一视角首帧、0.9 秒图像与绝对 RGB 差分" width="1078" height="381" loading="lazy"></a><figcaption><b>B · 原始帧差。</b>同一相机在 0 与 0.900 秒的图像，以及相对首帧的 RGB 绝对差。差分仅调整显示对比度，表示图像强度变化，不是位移真值，也不是放大后的训练输入。</figcaption></figure>
-    <figure><a href="assets/lego_motion_evidence.png" target="_blank" rel="noopener"><img src="assets/lego_motion_evidence.png" alt="跟踪点位置、原始幅值亚像素运动曲线及约 3 Hz 的光流位移谱主峰" width="1820" height="560" loading="lazy"></a><figcaption><b>C · 亚像素运动诊断。</b>特征点跟踪得到周期性的亚像素运动曲线，光流位移谱在约 3 Hz 处出现主峰。这些是由图像估计的二维运动，不是已知的三维位移或力学振型。</figcaption></figure>
-    <figure><a href="assets/figure_18_0.png" target="_blank" rel="noopener"><img src="assets/figure_18_0.png" alt="三个训练相机的 CSP 相位谱均在 3 Hz 频率格点出现主峰" width="980" height="371" loading="lazy"></a><figcaption><b>D · 独立相位频谱核对。</b>对原始图像序列计算复数可转向金字塔（CSP）相位谱；相机 000、010、020 的主峰均为 3 Hz，与数据标签一致。约 1 秒观测对应 1 Hz 频率分辨率，不能据此精确辨识阻尼。</figcaption></figure>
-    <details><summary>查看原始数据与作者 50× 几何运动的辅助对照</summary><figure><img src="assets/paired_diagnostic_frame.png" alt="左为原始观测图像，右为作者 50 倍几何运动的诊断图像" width="1024" height="552" loading="lazy"><figcaption>左：原始测试视角；右：作者 50× 几何运动诊断图。右图仅帮助定位运动，不能用作原始振动幅值的证据，也不是本项目模型的预测。</figcaption></figure></details>
-
-    <div class="why"><h3>为什么先选 Lego？</h3><ol><li><b>运动足够小，而且可检验。</b>约 3 Hz 的周期变化适合作为第一轮微运动提取与重投影检查对象。</li><li><b>多视角与相机参数齐全。</b>可以把二维观测联系到三维表示，检查换视角后的动态一致性。</li><li><b>外观结构清楚，便于排查问题。</b>边缘、纹理和前后遮挡让外观误差、运动误差更容易定位。</li><li><b>有公开出处，便于复现。</b>从统一的样本开始比较实现，再逐步扩大实验范围。</li></ol></div>
-    <aside><b>当前验证范围</b><p>Lego 是人工周期几何动画，不等同于真实弹性结构的自由衰减实验。原数据缺少标定力、质量、材料和三维位移真值。因此它支持微运动观测与三维表示的初步验证，不能单独证明真实材料参数或新外力响应被恢复。相机元数据最大元素漂移约为 1.01 × 10⁻⁶，仅说明本次序列的相机参数近似固定。</p></aside>
-    <p class="small">来源：<a href="https://3d-motion-magnification.github.io/">作者项目页</a> · <a href="https://github.com/3d-motion-magnification/3d-motion-mag">官方代码</a> · <a href="https://drive.google.com/drive/folders/1BZmPub98RntgnsxwKHosYuQwalbHe_Qt">Lego 数据目录</a> · <a href="https://github.com/3d-motion-magnification/3d-motion-mag/blob/main/scripts/synthetic/mag_blender.sh">采样率配置</a> · <a href="assets/sample_config.json">本次数据诊断配置</a> · <a href="asset-manifest.json">展示资源来源与校验值</a></p>
+    <h2>Lego 数据与微运动</h2>
+    <p>先用公开的 Lego 合成序列做初步验证：它具有多视角图像和相机参数，包含约 3 Hz 的周期微运动，适合检查振动提取与三维表示。</p>
+    <figure><a href="assets/lego_3Hz_three_views.gif" target="_blank" rel="noopener"><img src="assets/lego_3Hz_three_views.gif" alt="Lego 三个视角的原始幅值动画" width="960" height="320"></a><figcaption>原始幅值的三视角动画，未放大运动。</figcaption></figure>
+    <figure><a href="assets/lego_motion_evidence.png" target="_blank" rel="noopener"><img src="assets/lego_motion_evidence.png" alt="图像跟踪得到的亚像素运动曲线与约 3 Hz 的频谱主峰" width="1820" height="560" loading="lazy"></a><figcaption>图像跟踪估计的亚像素运动及频谱，主峰约 3 Hz。</figcaption></figure>
+    <p class="small">来源：<a href="https://3d-motion-magnification.github.io/">作者项目页</a> · <a href="https://drive.google.com/drive/folders/1BZmPub98RntgnsxwKHosYuQwalbHe_Qt">原始数据</a></p>
   </section>
 
   <section id="methods">
