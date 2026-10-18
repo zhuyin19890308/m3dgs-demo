@@ -1,4 +1,4 @@
-# M3DGS Interactive Experiments
+# M3DGS: Modal 3D Gaussian Splatting for Video-Based Spectral Dynamics
 
 独立的静态实验展示项目，包含已有交互模型、Lego 原始微运动证据、方法介绍及后续实验计划。
 
