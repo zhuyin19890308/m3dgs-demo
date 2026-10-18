@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "description": "Existing exports copied byte-for-byte; no retraining.",
+  "lego_source": "https://3d-motion-magnification.github.io/",
+  "figure_note": "RGB differences are intensity changes; tracked displacements are estimates; author 50x image is diagnostic only.",
+  "files": [
+    {
+      "path": "demos/davis.html",
+      "source": "notebooks/davis_ismb/outputs/wireman_interactive.html",
+      "bytes": 106112,
+      "sha256": "623de99936d295eda6594d20b1ee40a0db175fa583076008b00c823c7541b266"
+    },
+    {
+      "path": "demos/gaussian-coarse.html",
+      "source": "notebooks/m3dgs/outputs/lego_m3dgs_v1/lego_interactive.html",
+      "bytes": 3412890,
+      "sha256": "c5d174a64ef15e1847973c164d36444ca1d61f83d857c5e27aa7701bdefe5359"
+    },
+    {
+      "path": "demos/gaussian-hifi.html",
+      "source": "notebooks/m3dgs/outputs/lego_m3dgs_hifi_final/lego_hifi_interactive.html",
+      "bytes": 31663717,
+      "sha256": "1ce272686f0528cc4b7b22e720d7f80b33d26bde164857ea21654ac75f9506c3"
+    },
+    {
+      "path": "demos/gaussian-vibration.html",
+      "source": "notebooks/m3dgs/outputs/lego_gaussian_vibration_constraints/lego_gaussian_vibration_interactive.html",
+      "bytes": 24529772,
+      "sha256": "cb2c60d9976400848868a649ef3a82694c2e29a13a66dac4e134dfb9aa82ef08"
+    },
+    {
+      "path": "demos/mechanics.html",
+      "source": "notebooks/m3dgs/outputs/mechanics_v4/mechanics_proxy_interactive.html",
+      "bytes": 50707608,
+      "sha256": "f51d5081a565db4fcc11fc57892ae7382d6f3670d83760d149f415166bd6014a"
+    },
+    {
+      "path": "assets/lego_3Hz_three_views.gif",
+      "source": "notebooks/m3dgs/outputs/lego_3Hz_three_views.gif",
+      "bytes": 1587516,
+      "sha256": "cebb3856a4a502d1e07e9af501cf20fcde288bc7e6faa0c47e49dd350a218a0a"
+    },
+    {
+      "path": "assets/figure_11_0.png",
+      "source": "notebooks/m3dgs/outputs/figure_11_0.png",
+      "bytes": 216291,
+      "sha256": "f255fb18e0c98567ecf74742449b1e6e16c2143d36d37cf8241c6913f3626432"
+    },
+    {
+      "path": "assets/lego_motion_evidence.png",
+      "source": "notebooks/m3dgs/outputs/lego_motion_evidence.png",
+      "bytes": 268678,
+      "sha256": "d3fa691a05c1d645528503fe5767c9ed0865050966ccb3a531aeaaa8cf28dfb7"
+    },
+    {
+      "path": "assets/figure_18_0.png",
+      "source": "notebooks/m3dgs/outputs/figure_18_0.png",
+      "bytes": 53107,
+      "sha256": "fb4ffa191ae77a6f90c593ac63906dc663ccff90d5c128421a490dc6fefa61a7"
+    },
+    {
+      "path": "assets/paired_diagnostic_frame.png",
+      "source": "notebooks/m3dgs/outputs/paired_diagnostic_frame.png",
+      "bytes": 203003,
+      "sha256": "6f917023f493b2b01ffc6a2b1274018552b936127607a8f274ff0b1f8fb58e56"
+    },
+    {
+      "path": "assets/sample_config.json",
+      "source": "notebooks/m3dgs/outputs/sample_config.json",
+      "bytes": 2176,
+      "sha256": "b52f5a8481d6344b58e86ee030397125843b500dc4436fee4ea109e81f6ecde1"
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="M3DGS 实验记录：Lego 原始微运动证据、方法演进与可操作的三维振动演示。">
+  <title>M3DGS · 微运动与交互实验</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+<header><a class="wordmark" href="#">M3DGS <span>实验记录</span></a><nav aria-label="页面导航"><a href="#evidence">原始证据</a><a href="#methods">方法与交互</a><a href="#next">后续实验</a></nav></header>
+<main>
+  <section class="hero">
+    <p class="eyebrow">RESEARCH IN PROGRESS / 研究进行中</p>
+    <h1>从微小运动，<br>到可交互的三维响应。</h1>
+    <p class="lead">记录我们从视频运动分析、三维 Gaussian 表示到力学模态逆渲染的探索。先看原始数据中的运动证据，再亲手尝试各阶段的交互效果。</p>
+    <a class="button" href="#methods">进入交互实验 <span aria-hidden="true">↗</span></a>
+    <a class="text-link" href="#evidence">先看 Lego 为什么会动 ↓</a>
+    <p class="small">展示已有实验结果 · 浏览器端交互 · 更新于 2026-10-18</p>
+  </section>
+
+  <section id="evidence">
+    <div class="section-heading"><span class="number">01</span><div><p class="eyebrow">SOURCE DATA & EVIDENCE</p><h2>原始 Lego 数据里，确实有周期微运动。</h2></div></div>
+    <p>这里的 Lego 不是单张静态图片，而是 <a href="https://3d-motion-magnification.github.io/">3D Motion Magnification（ICCV 2023）</a>公开的 <code>lego_3Hz</code> 合成动态序列。我们使用同一相机跨时间的图像进行诊断；同一时刻切换相机，不能当作物体振动。</p>
+    <div class="facts"><div><strong>30 fps</strong><span>作者配置的采样率</span></div><div><strong>30 帧</strong><span>约 1 秒观测窗口</span></div><div><strong>≈ 3 Hz</strong><span>三个训练视角的相位谱主峰</span></div><div><strong>多视角</strong><span>图像与相机参数可对应</span></div></div>
+    <figure><a href="assets/lego_3Hz_three_views.gif" target="_blank" rel="noopener"><img src="assets/lego_3Hz_three_views.gif" alt="Lego 在相机 000、010、020 下的同步原始幅值动画" width="960" height="320"></a><figcaption><b>A · 原始幅值动画。</b>三个同步视角，没有进行运动放大。微运动肉眼不明显，因此还需要下面的图像和时间诊断。</figcaption></figure>
+    <figure><a href="assets/figure_11_0.png" target="_blank" rel="noopener"><img src="assets/figure_11_0.png" alt="同一视角首帧、0.9 秒图像与绝对 RGB 差分" width="1078" height="381" loading="lazy"></a><figcaption><b>B · 原始帧差。</b>同一相机在 0 与 0.900 秒的图像，以及相对首帧的 RGB 绝对差。差分仅调整显示对比度，表示图像强度变化，不是位移真值，也不是放大后的训练输入。</figcaption></figure>
+    <figure><a href="assets/lego_motion_evidence.png" target="_blank" rel="noopener"><img src="assets/lego_motion_evidence.png" alt="跟踪点位置、原始幅值亚像素运动曲线及约 3 Hz 的光流位移谱主峰" width="1820" height="560" loading="lazy"></a><figcaption><b>C · 亚像素运动诊断。</b>特征点跟踪得到周期性的亚像素运动曲线，光流位移谱在约 3 Hz 处出现主峰。这些是由图像估计的二维运动，不是已知的三维位移或力学振型。</figcaption></figure>
+    <figure><a href="assets/figure_18_0.png" target="_blank" rel="noopener"><img src="assets/figure_18_0.png" alt="三个训练相机的 CSP 相位谱均在 3 Hz 频率格点出现主峰" width="980" height="371" loading="lazy"></a><figcaption><b>D · 独立相位频谱核对。</b>对原始图像序列计算复数可转向金字塔（CSP）相位谱；相机 000、010、020 的主峰均为 3 Hz，与数据标签一致。约 1 秒观测对应 1 Hz 频率分辨率，不能据此精确辨识阻尼。</figcaption></figure>
+    <details><summary>查看原始数据与作者 50× 几何运动的辅助对照</summary><figure><img src="assets/paired_diagnostic_frame.png" alt="左为原始观测图像，右为作者 50 倍几何运动的诊断图像" width="1024" height="552" loading="lazy"><figcaption>左：原始测试视角；右：作者 50× 几何运动诊断图。右图仅帮助定位运动，不能用作原始振动幅值的证据，也不是本项目模型的预测。</figcaption></figure></details>
+
+    <div class="why"><h3>为什么先选 Lego？</h3><ol><li><b>运动足够小，而且可检验。</b>约 3 Hz 的周期变化适合作为第一轮微运动提取与重投影检查对象。</li><li><b>多视角与相机参数齐全。</b>可以把二维观测联系到三维表示，检查换视角后的动态一致性。</li><li><b>外观结构清楚，便于排查问题。</b>边缘、纹理和前后遮挡让外观误差、运动误差更容易定位。</li><li><b>有公开出处，便于复现。</b>从统一的样本开始比较实现，再逐步扩大实验范围。</li></ol></div>
+    <aside><b>当前验证范围</b><p>Lego 是人工周期几何动画，不等同于真实弹性结构的自由衰减实验。原数据缺少标定力、质量、材料和三维位移真值。因此它支持微运动观测与三维表示的初步验证，不能单独证明真实材料参数或新外力响应被恢复。相机元数据最大元素漂移约为 1.01 × 10⁻⁶，仅说明本次序列的相机参数近似固定。</p></aside>
+    <p class="small">来源：<a href="https://3d-motion-magnification.github.io/">作者项目页</a> · <a href="https://github.com/3d-motion-magnification/3d-motion-mag">官方代码</a> · <a href="https://drive.google.com/drive/folders/1BZmPub98RntgnsxwKHosYuQwalbHe_Qt">Lego 数据目录</a> · <a href="https://github.com/3d-motion-magnification/3d-motion-mag/blob/main/scripts/synthetic/mag_blender.sh">采样率配置</a> · <a href="assets/sample_config.json">本次数据诊断配置</a> · <a href="asset-manifest.json">展示资源来源与校验值</a></p>
+  </section>
+
+  <section id="methods">
+    <div class="section-heading"><span class="number">02</span><div><p class="eyebrow">METHODS & INTERACTIVE DEMOS</p><h2>四个研究阶段，逐步尝试。</h2></div></div>
+    <p>选择一种方法查看介绍，再点击加载交互。每次加载一个实验，切换方法时释放前一个窗口。高保真页面包含较多 Gaussian 数据，首次加载需要一些时间。</p>
+    <div class="method-buttons" role="group" aria-label="选择实验方法">
+      <button data-method="davis" aria-pressed="false">V1 · Davis 二维交互</button>
+      <button data-method="coarse" aria-pressed="false">V2 · 三维粗初始化</button>
+      <button data-method="hifi" aria-pressed="true">V2 · 高保真外观</button>
+      <button data-method="vibration" aria-pressed="false">V3 · 逐 Gaussian 约束</button>
+      <button data-method="mechanics" aria-pressed="false">V4 · 力学模态逆渲染</button>
+    </div>
+    <article id="method-description" aria-live="polite"><h3>V2 · 高保真 Gaussian 外观与共享运动场</h3><p>先优化静态 3DGS 外观，再冻结外观，从原始微位移拟合共享三维复数运动场。它是 V2 的外观升级，与粗初始化属于同一研究阶段。</p><p class="small">支持自由转视角、拖拽、轻敲和阻尼 / 频率调节。交互强度与阻尼不能解释为已标定的真实受力响应。</p></article>
+    <div class="demo-actions"><button class="button" id="load-demo">加载交互</button><a id="standalone" href="demos/gaussian-hifi.html" target="_blank" rel="noopener">独立窗口打开 ↗</a><button class="text-button" id="unload-demo" hidden>关闭交互</button></div>
+    <div id="demo-stage"><p class="placeholder">选择方法后点击“加载交互”。<br><span>已有模型与运动数据在浏览器中运行，无需训练。</span></p></div>
+    <p id="demo-status" class="small" role="status"></p>
+    <noscript><p>浏览器需要启用 JavaScript 才能使用嵌入式交互。也可直接打开 <a href="demos/davis.html">Davis</a>、<a href="demos/gaussian-coarse.html">粗初始化</a>、<a href="demos/gaussian-hifi.html">高保真</a>、<a href="demos/gaussian-vibration.html">逐 Gaussian</a> 或 <a href="demos/mechanics.html">力学模态</a> 页面。</p></noscript>
+  </section>
+
+  <section id="next">
+    <div class="section-heading"><span class="number">03</span><div><p class="eyebrow">WHAT COMES NEXT</p><h2>Lego 是起点，实验将继续扩展。</h2></div></div>
+    <p class="lead">后续我们将增加更多实验，覆盖更多对象、场景与运动形式，持续更新对照结果和交互演示。</p>
+    <p>计划逐步补充更多真实与合成数据、更丰富的振动频率与加载条件，以及跨视角、跨输入的评估。每个新增实验会说明数据来源、验证协议、结果和局限；当前页面仅展示已经完成的实验。</p>
+  </section>
+</main>
+<footer><span>M3DGS / 实验记录</span><p>数据与原始场景归原作者所有。图表来自本项目已保存的诊断输出，作者 50× 参考图已单独标注。<a href="https://github.com/zhuyin19890308/M3DGS">项目代码 ↗</a></p></footer>
+</body>
+</html>
