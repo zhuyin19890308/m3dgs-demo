@@ -1,14 +1,18 @@
 {
   "schema_version": 1,
-  "description": "Existing exports copied byte-for-byte; no retraining.",
+  "description": "Existing experimental exports packaged for browser demos; presentation edits recorded per asset; no retraining.",
   "lego_source": "https://3d-motion-magnification.github.io/",
   "figure_note": "RGB differences are intensity changes; tracked displacements are estimates; author 50x image is diagnostic only.",
   "files": [
     {
       "path": "demos/davis.html",
       "source": "notebooks/davis_ismb/outputs/wireman_interactive.html",
-      "bytes": 106112,
-      "sha256": "623de99936d295eda6594d20b1ee40a0db175fa583076008b00c823c7541b266"
+      "bytes": 105882,
+      "sha256": "f06a92711aa7fa7a64ce67cfebc95636af46944853c1a9515d0748544dbe514f",
+      "source_sha256": "623de99936d295eda6594d20b1ee40a0db175fa583076008b00c823c7541b266",
+      "presentation_edits": [
+        "Removed the visible teaching-renderer implementation note; scripts and embedded model data unchanged."
+      ]
     },
     {
       "path": "demos/gaussian-coarse.html",
